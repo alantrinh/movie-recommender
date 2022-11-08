@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Recommendations</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="ui container">
+        <h1 class="ui-header">🎥 Recommendations</h1>
+        <p>Based on {{ model }} model and user ratings:</p>
+            <ul class="ui list">
+                {% for movie, rating in user_query.items() %}
+                    <li>{{movie}} : {{ rating }}</li>
+                {% endfor %}
+            </ul>
+        <p>Feel free to hop on the sofa and watch one of the following movies</p>
+        <p>
+            <ul class="ui list" style="list-style-type:none">
+                {% for movie in recommendations %}
+                    <li class="item">{{ movie }}</li>
+                {% endfor %}
+            </ul>
+        
+        </p>
+        <p>Click <a href='/'>here</a> to go back home</p>
+    </div>
+</body>
+</html>

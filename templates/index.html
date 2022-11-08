@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Movie Recommender</title>
+    <script src="https://code.jquery.com/jquery-3.1.1.min.js" crossorigin="anonymous"></script>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/semantic-ui@2.5.0/dist/semantic.min.js"></script>
+    <link rel="stylesheet" href="static/css/style.css">
+</head>
+<body>
+    <div class="ui container">
+        <a href="https://christophsgeburtstag.000webhostapp.com">
+            <h1 class="ui header">🧄📈 Movie Recommender</h1>
+        </a>
+        <p>Welcome to the 🧄📈 Movie Recommender</p>
+        <p>Please rate some movies 1-5 to get your new recommendations</p>
+        <form id="ratings" class="ui form" action="/recommendations"></form>
+        <button class="ui button" type="button" onclick="addMovie()">Add movie</button>
+        <input form="ratings" class="ui button" type="submit" value="Submit" />
+        <p>Click <a href='/recommendations'>here</a> go straight to recommendations</p>
+    </div>
+
+    <script>
+        const addMovie = () => {
+            const movieDropdown = document.createElement('select');
+            movieDropdown.className = 'ui search dropdown'
+            movieDropdown.name = 'movies';
+            var option = document.createElement('option');
+            option.value = '';
+            option.text = '--Please choose a movie--'
+            movieDropdown.add(option)
+            '{% for movie in movies %}'
+                var option = document.createElement('option');
+                option.value = '{{ movie }}'
+                option.text = '{{ movie }}'
+                movieDropdown.add(option)
+            '{% endfor %}'
+
+            const rating = document.createElement('input');
+            rating.className = 'ui input focus'
+            rating.type = 'number'
+            rating.min = 1
+            rating.max = 5
+            rating.placeholder = '1-5'
+            movieDropdown.addEventListener('input', () => {
+                const selectedMovie = movieDropdown.options[movieDropdown.selectedIndex].text;
+                rating.name = selectedMovie;
+            });
+
+            const fieldDiv = document.createElement('div');
+            fieldDiv.className = 'field'
+            fieldDiv.appendChild(movieDropdown);
+            fieldDiv.appendChild(rating);
+
+            const ratingsForm = document.getElementById('ratings');
+            ratingsForm.appendChild(fieldDiv)
+        }
+        
+        addMovie();
+    </script>
+
+</body>
+</html>
